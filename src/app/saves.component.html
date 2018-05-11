@@ -1,0 +1,16 @@
+<div *ngFor="let film of data">
+      
+        <div class="container">
+            <div class="col-lg-12 text" >
+              
+                
+              <a href="{{film.url}}" target="_blank">{{film.title}}</a>
+              <br />
+              <div>
+              <p>&nbsp;&nbsp;{{film.time}} <span *ngIf="film.location">&nbsp;&nbsp; - {{film.location}}</span></p>
+              <div>{{film.name}}</div>
+              </div>      
+            </div>    
+          </div>   
+          
+      </div>

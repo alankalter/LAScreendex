@@ -1,0 +1,81 @@
+
+
+
+
+
+<div class="all" (window:keydown)="keyPressHandler($event)">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header text-center">
+        <a class="navbar-brand" href="#" data-toggle="modal" data-target="#infoModal">
+          <img alt="Brand" src="/assets/menuImg.jpg">
+        </a>
+      <div class="date-head">
+          {{currentDate}}
+      </div>
+      <a class="navbar-brand pull-right" href="/saves" >
+          S
+        </a>
+      </div>
+     
+    </div>
+  </nav>
+
+    
+  <div *ngFor="let theater of data | theaterDateFilter: currentDate">
+      
+    <div class="container">
+        <h3>{{theater.name}}</h3>
+        <div class="col-lg-12 text" *ngFor="let film of (theater.films |  dateFilter: currentDate)">
+          <a href="{{film.url}}" target="_blank">{{film.title}}</a>
+          <br />
+          <div>
+          <p>&nbsp;&nbsp;{{film.time}} <span *ngIf="film.location">&nbsp;&nbsp; - {{film.location}}</span></p>
+          </div> 
+          <div (click)="addToSaves(film)" >+Save</div>
+               
+        </div>   
+        
+      </div>
+
+          <p *ngIf="theater == -1">No tengo nada.</p>      
+      
+  </div>
+
+
+  <div class="bottom-nav">
+    <div class="back-button pull-left" >
+      <div (click)="incrementDate(-1)"><span class="glyphicon glyphicon-chevron-left"></span></div>
+    </div>
+
+    <div class="forward-button pull-right" >
+      <div (click)="incrementDate(1)" ><span class="glyphicon glyphicon-chevron-right"></span></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div id="infoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">LA Screendex</h4>
+      </div>
+      <div class="modal-body">
+        <p>LA Screendex is a listing hub of choice movie screenings in the Los Angeles area.</p>
+        <p>Left and right arrow keys for navigation.</p>
+        
+        <p>For updates, info, or to make suggestions about theaters/screenings to add:</p>
+        <p>Email <a href="lascreendex@gmail.com">here.</a>
+        <p>&copy; LA Screendex {{year}}</p>
+        
+      </div>      
+    </div>
+
+  </div>
+</div>

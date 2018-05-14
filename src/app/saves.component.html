@@ -1,16 +1,92 @@
-<div *ngFor="let film of data">
-      
+<div class="all" >
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header text-center">
+        <a class="navbar-brand" href="#" data-toggle="modal" data-target="#infoModal">
+          <img alt="Brand" src="/assets/menuImg.jpg">
+        </a>
+      <div class="date-head">
+         Saved Events
+      </div>
+      <a class="navbar-brand pull-right nav-link" href="/" >
+          Calendar
+        </a>
+      </div>
+     
+    </div>
+  </nav>
+
+<p *ngIf="byDateData.length ==0">No tengo nada.</p>
+    <!--by date view-->
+    <div *ngIf="!displayFlag">
+      <div *ngFor="let date of byDateData">          
         <div class="container">
-            <div class="col-lg-12 text" >
-              
-                
+            <h3>{{reformatDate(date.date)}}</h3>            
+            <div class="col-lg-12 text film-unit" *ngFor="let film of date.films">
+              <h4>{{film.name}}</h4>
               <a href="{{film.url}}" target="_blank">{{film.title}}</a>
               <br />
               <div>
               <p>&nbsp;&nbsp;{{film.time}} <span *ngIf="film.location">&nbsp;&nbsp; - {{film.location}}</span></p>
-              <div>{{film.name}}</div>
-              </div>      
-            </div>    
-          </div>   
-          
+              <div class="save-link" (click)="removeFromSaves(film)" >- Remove</div>
+              </div>                                
+            </div>               
+          </div>
+                             
       </div>
+  </div>
+
+<!--by location data-->
+    <div *ngIf="displayFlag">
+        <div *ngFor="let loc of byLocData">            
+          <div class="container">
+              <h3>{{loc.name}}</h3>        
+              <div class="col-lg-12 text" *ngFor="let film of loc.films">
+                <a href="{{film.url}}" target="_blank">{{film.title}}</a>
+                <br />
+                <h5>{{reformatDate(film.date)}}</h5>
+                <div>
+                <p>&nbsp;&nbsp;{{film.time}} <span *ngIf="film.location">&nbsp;&nbsp; - {{film.location}}</span></p>
+                <div (click)="removeFromSaves(film)" >- Remove</div> 
+                </div>                                   
+              </div>                 
+            </div>
+                <p *ngIf="loc == -1">No tengo nada.</p>                  
+        </div>
+    </div>
+
+
+
+
+
+  <div class="bottom-nav">    
+    <div class="date-head pull-right" (click)="changeDisplaymode()" >
+              {{getDisplayMode()}}
+            </div>    
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="infoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">LA Screendex</h4>
+      </div>
+      <div class="modal-body">
+        <p>LA Screendex is a listing hub of choice movie screenings in the Los Angeles area.</p>
+        <p>Left and right arrow keys for navigation.</p>
+        
+        <p>For updates, info, or to make suggestions about theaters/screenings to add:</p>
+        <p>Email <a href="lascreendex@gmail.com">here.</a>
+        <p>&copy; LA Screendex {{year}}</p>
+        
+      </div>      
+    </div>
+
+  </div>
+</div>

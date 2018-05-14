@@ -13,8 +13,8 @@
       <div class="date-head">
           {{currentDate}}
       </div>
-      <a class="navbar-brand pull-right" href="/saves" >
-          S
+      <a class="navbar-brand pull-right nav-link" href="/saves" >
+          Saves
         </a>
       </div>
      
@@ -26,20 +26,15 @@
       
     <div class="container">
         <h3>{{theater.name}}</h3>
-        <div class="col-lg-12 text" *ngFor="let film of (theater.films |  dateFilter: currentDate)">
+        <div class="col-lg-12 text film-unit" *ngFor="let film of (theater.films |  dateFilter: currentDate)">
           <a href="{{film.url}}" target="_blank">{{film.title}}</a>
           <br />
           <div>
           <p>&nbsp;&nbsp;{{film.time}} <span *ngIf="film.location">&nbsp;&nbsp; - {{film.location}}</span></p>
           </div> 
-          <div (click)="addToSaves(film)" >+Save</div>
-               
-        </div>   
-        
-      </div>
-
-          <p *ngIf="theater == -1">No tengo nada.</p>      
-      
+          <div *ngIf="!film.saved" class="save-link" (click)="addToSaves(film)" >+Save</div>               
+        </div>        
+    </div>      
   </div>
 
 

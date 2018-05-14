@@ -21,7 +21,20 @@ export class CalendarComponent  {
   
   data: any[] = [];
   constructor(private db: AngularFireDatabase) { 
-    this.localSaves = JSON.parse(localStorage["saves"]) || [];
+     localStorage.setItem("saves", "");
+    
+      this.localSaves = parseSaves(localStorage["saves"]);
+
+
+
+    function parseSaves (saves: string){
+      if (saves){
+        return JSON.parse(saves)
+      }
+      else {
+        return [];
+      }
+    }
     this.localStorageSupported = typeof window['localStorage'] != "undefined" && window['localStorage'] != null;
      this.db.list('/Theaters').snapshotChanges().subscribe(snapshots=>{
             snapshots.forEach(snapshot => {
@@ -54,15 +67,17 @@ export class CalendarComponent  {
   }
   
   public addToSaves (film: {}){
-      console.log(this.localSaves);
     var existing = 0;
-        if (!this.localSaves.find(function (a){return a === film;}))
+        if (!this.localSaves.find(function (a){return a == film;}))
         {         
+          
                   this.localSaves.push(film);
                   if (this.localStorageSupported) {
-                      localStorage.setItem("saves", JSON.stringify(this.localSaves));
+                       localStorage.setItem("saves", JSON.stringify(this.localSaves));
                   }
-        }        
+        }  
+      console.log(this.localSaves);
+              
   }  
 
 }

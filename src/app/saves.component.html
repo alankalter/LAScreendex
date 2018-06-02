@@ -31,7 +31,7 @@
               <p>&nbsp;&nbsp;{{film.time}} <span *ngIf="film.location">&nbsp;&nbsp; - {{film.location}}</span></p>
               <div class="save-link" (click)="removeFromSaves(film)" >- Remove</div>
               </div>    
-          <a href="https://calendar.google.com/calendar/r/eventedit?text={{film.title}}&dates={{convertDateTime(date.date, film.time)}}&details=For+details,+link+here:+{{film.url}}&location={{getLoc(film)}}" target="_blank">add to cal</a>
+          <a href="https://calendar.google.com/calendar/r/eventedit?&text={{film.title}}+{{film.time}}&dates={{convertDate(date.date)}}&details=For+details,+link+here:+{{film.url}}&location={{getLoc(film)}}" target="_blank">add to cal</a>
                                           
             </div> 
                           

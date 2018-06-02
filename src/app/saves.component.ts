@@ -109,10 +109,10 @@ export class SavesComponent  {
     return film.location || film.name;
   }
 
-  private convertDateTime(date, time){
-      var dateform = moment(date).add(2, 'hours');
-      // var dateform = moment(date + ' ' + time, 'DD/MM/YYYY HH:mm');
+  private convertDate(date){
+      
+      var dateform = moment(date , 'MM/DD/YYYY');
     
-    return dateform.format('YYYYMMDDTHHmmss') + 'Z/' + dateform.format('YYYYMMDDTHHmmss') + 'Z';
+    return dateform.format('YYYYMMDDTHHmmss') + '/' + dateform.add(1, 'day').format('YYYYMMDDTHHmmss');
   }
 }

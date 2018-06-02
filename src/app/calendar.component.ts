@@ -21,7 +21,7 @@ export class CalendarComponent  {
   
   data: any[] = [];
   constructor(private db: AngularFireDatabase) { 
-     localStorage.setItem("saves", "");
+    //  localStorage.setItem("saves", "");
     
       this.localSaves = parseSaves(localStorage["saves"]);
 
@@ -36,19 +36,37 @@ export class CalendarComponent  {
       }
     }
     this.localStorageSupported = typeof window['localStorage'] != "undefined" && window['localStorage'] != null;
+
      this.db.list('/Theaters').snapshotChanges().subscribe(snapshots=>{
             snapshots.forEach(snapshot => {
                var newObj = {};
               newObj["name"] = snapshot.key;
               newObj["films"] = snapshot.payload.val();
               newObj["films"].map(x => x.name = snapshot.key);
+
               this.data.push(newObj);
             });;
             this.currentDate = moment().format("ddd MM/DD/YYYY");
             this.year = moment().year();
-          
-  });
+            this.checkSaves(this.localSaves);
+      });
+
+      
+      
+
   
+}
+
+private checkSaves(saves){
+  this.data.forEach(function (d){
+    d.films.forEach(function (f){    
+      saves.forEach(function(s){
+        if (JSON.stringify(f) === JSON.stringify(s)){
+          f.saved = true;
+        }
+      })
+  })
+  });
 }
 
   public incrementDate(amount) {
@@ -66,15 +84,16 @@ export class CalendarComponent  {
     }    
   }
   
-  public addToSaves (film: {}){
+  public addToSaves (film){
     var existing = 0;
         if (!this.localSaves.find(function (a){return a == film;}))
         {         
-          
+          film.saved = true;
                   this.localSaves.push(film);
                   if (this.localStorageSupported) {
                        localStorage.setItem("saves", JSON.stringify(this.localSaves));
                   }
+
         }  
       console.log(this.localSaves);
               

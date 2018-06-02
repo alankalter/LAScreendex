@@ -1,5 +1,11 @@
 .save-link {
     margin-left: 20px;
+    margin-top: -10px;
+    cursor: pointer;
+}
+
+.film-sub-unit{
+    margin-left: 10px;
 }
 
 .film-unit {

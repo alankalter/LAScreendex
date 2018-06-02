@@ -39,6 +39,8 @@ export class SavesComponent  {
   }
   public refreshData(){
 
+      this.byDateData = [];
+      this.byLocData = [];
       for (var i=0; i<this.data.length;i++)
       {
           this.dictionaryStyleAddByDate(this.data[i]);
@@ -96,4 +98,21 @@ export class SavesComponent  {
           this.byLocData.push({name:item.name,films:[item]});
               return;
   } 
+
+  private removeFromSaves(item){
+    this.data = this.data.filter( x => x !== item);
+    localStorage.setItem("saves", JSON.stringify(this.data));
+    this.refreshData();
+  }
+
+  private getLoc(film){
+    return film.location || film.name;
+  }
+
+  private convertDateTime(date, time){
+      var dateform = moment(date).add(2, 'hours');
+      // var dateform = moment(date + ' ' + time, 'DD/MM/YYYY HH:mm');
+    
+    return dateform.format('YYYYMMDDTHHmmss') + 'Z/' + dateform.format('YYYYMMDDTHHmmss') + 'Z';
+  }
 }
